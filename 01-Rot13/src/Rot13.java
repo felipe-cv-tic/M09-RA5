@@ -13,15 +13,15 @@ public class Rot13{
         System.out.println("---------");
         System.out.println("ABC                          => "+ xifraRot13("ABC"));
         System.out.println("XYZ                          => "+ xifraRot13("XYZ"));
-        System.out.println("Hola, Mr. Calçot             => "+ xifraRot13("Hola, Mr. Calçot "));
+        System.out.println("Hola, Mr. Calçot             => "+ xifraRot13("Hola, Mr. Calçot"));
         System.out.println("Perdó, per tu què és?        => "+ xifraRot13("Perdó, per tu què és?"));
-
+        System.out.println();
         System.out.println("Desxifrat");
         System.out.println("---------");
-        System.out.println("IÏJ                          => "+ desxifraRot13("ABC"));
-        System.out.println("FGH                          => "+ desxifraRot13("XYZ"));
-        System.out.println("Hola, Mr. Calçot             => "+ desxifraRot13("Hola, Mr. Calçot "));
-        System.out.println("Perdó, per tu què és?        => "+ desxifraRot13("Perdó, per tu què és?"));
+        System.out.println("IÏJ                          => "+ desxifraRot13("IÏJ"));
+        System.out.println("FGH                          => "+ desxifraRot13("FGH"));
+        System.out.println("Òwúi, Ùá. Jiúkwb             => "+ desxifraRot13("Òwúi, Ùá. Jiúkwb"));
+        System.out.println("Zmálx, zmá bc acñ nà?        => "+ desxifraRot13("Zmálx, zmá bc acñ nà?"));
         
     }
 
@@ -61,14 +61,14 @@ public class Rot13{
                 for (int j = 0; j < majuscules.length; j++) {
                     char cArray = majuscules[j];
                     if (c==cArray){
-                        resultat += majuscules[(j - 13 % majuscules.length + majuscules.length) % majuscules.length];
+                        resultat += majuscules[(j - 13 +majuscules.length) % majuscules.length];
                     }
                 }
             }else if (Character.isLowerCase(c)){
                 for (int j = 0; j < minuscules.length; j++) {
                     char cArray = minuscules[j];
                     if (c==cArray){
-                        resultat += minuscules[(j - 13 % minuscules.length + minuscules.length) % minuscules.length];
+                        resultat += minuscules[(j - 13 + minuscules.length) % minuscules.length];
                     }
                 }
             }
