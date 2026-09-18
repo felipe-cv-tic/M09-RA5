@@ -9,19 +9,28 @@ public class RotX{
         'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 'V', 'W', 'X', 'Y', 'Z'
     };
     public static void main(String[] args){
+        String[] paraules = {"ABC","XYZ","Hola, Mr. Calçot","Perdó, per tu què és?"};
+        int[] valors = {0,2,4,6};
+        String[] paraulesXifrades = new String[paraules.length];
         System.out.printf("Xifrat\n");
         System.out.printf("---------\n");
-        System.out.printf("(0)-ABC                          => %s\n", xifraRotX("ABC",0));
-        System.out.printf("(2)-XYZ                          => %s\n", xifraRotX("XYZ",2));
-        System.out.printf("(4)-Hola, Mr. Calçot             => %s\n", xifraRotX("Hola, Mr. Calçot",4));
-        System.out.printf("(6)-Perdó, per tu què és?        => %s\n", xifraRotX("Perdó, per tu què és?",6));
+
+        for (int i = 0; i < paraules.length; i++) {
+
+            System.out.printf("(%d)-%s             => %s\n",valors[i],paraules[i],xifraRotX(paraules[i],valors[i]));
+            paraulesXifrades[i] = xifraRotX(paraules[i],valors[i]);
+
+        }
         System.out.println();
         System.out.printf("Desxifrat\n");
         System.out.printf("---------\n");
-        System.out.printf("(0)-ABC                          => %s\n", desxifraRotX("ABC",0));
-        System.out.printf("(2)-ZAÁ                          => %s\n", desxifraRotX("ZAÁ",2));
-        System.out.printf("(4)-Ïqoc, Óú. Écoèqü             => %s\n", desxifraRotX("Ïqoc, Óú. Écoèqü ",4));
-        System.out.printf("(6)-Úiüht, úiü wx ùxì ív?        => %s\n", desxifraRotX("Úiüht, úiü wx ùxì ív?",6));
+
+        for (int i = 0; i < paraulesXifrades.length; i++) {
+
+            System.out.printf("(%d)-%s             => %s\n",valors[i],paraulesXifrades[i],desxifraRotX(paraulesXifrades[i],valors[i]));
+
+        }
+
         System.out.println();
 
         forcaBrutaRotX("Úiüht, úiü wx ùxì ív?");
