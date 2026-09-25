@@ -36,6 +36,7 @@ public class RotX{
         forcaBrutaRotX("Úiüht, úiü wx ùxì ív?");
     }
 
+    
     public static String xifraRotX(String cadena, int desplaçament){
         StringBuffer resultat = new StringBuffer();
         for (int i = 0; i < cadena.length(); i++) {
