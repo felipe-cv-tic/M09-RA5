@@ -21,6 +21,7 @@ public class Monoalfabetic{
         }
         return permutat;
     }
+
     
     public static void main(String[] args) {
         
