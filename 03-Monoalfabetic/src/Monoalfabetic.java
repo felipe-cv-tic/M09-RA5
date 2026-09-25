@@ -7,13 +7,24 @@ public class Monoalfabetic{
         'A', 'Á', 'À', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Ï',
         'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 'V', 'W', 'X', 'Y', 'Z'
     };
-    private final static List<Character> alfabetPermutat = new ArrayList<>();
+    private final static List<Character> alfabetPermutatArrayList = new ArrayList<>();
+    private final static char[] alfabetPermutat = permutaAlfabet(alfabet);
+
+    public static char[] permutaAlfabet(char[] alfabet){
+        for (char c : alfabet) {
+            alfabetPermutatArrayList.add(c);
+        }
+        Collections.shuffle(alfabetPermutatArrayList);
+        char[] permutat = new char[alfabetPermutatArrayList.size()];
+        for (int i = 0; i < alfabetPermutatArrayList.size(); i++) {
+            permutat[i] = alfabetPermutatArrayList.get(i);
+        }
+        return permutat;
+    }
+    
     public static void main(String[] args) {
         
-        for (char c : alfabet) {
-            alfabetPermutat.add(c);
-        }
-        Collections.shuffle(alfabetPermutat);
+        
 
         String[] frases = {
             "Test 01 àrbitre, coixí, Perímetre",
@@ -27,8 +38,8 @@ public class Monoalfabetic{
             System.out.printf("%c ",alfabet[i]);
         }
         System.out.println();
-        for (int i = 0; i < alfabetPermutat.size(); i++) {
-            System.out.printf("%c ",alfabetPermutat.get(i));
+        for (int i = 0; i < alfabetPermutat.length; i++) {
+            System.out.printf("%c ",alfabetPermutat[i]);
         }
         System.out.println();
         System.out.printf("Xifratge: \n");
@@ -59,9 +70,9 @@ public class Monoalfabetic{
                 for (int j = 0; j < alfabet.length; j++) {
                     char cArray = alfabet[j];
                     if (c==cArray && isLowerCase){
-                        resultat.append(Character.toLowerCase(alfabetPermutat.get(j)));
+                        resultat.append(Character.toLowerCase(alfabetPermutat[j]));
                     }else if (c==cArray && !isLowerCase){
-                        resultat.append(alfabetPermutat.get(j));
+                        resultat.append(alfabetPermutat[j]);
                     }
                 }
             }else{
@@ -82,8 +93,8 @@ public class Monoalfabetic{
             }
 
             if (Character.isLetter(c)) {
-                for (int j = 0; j < alfabetPermutat.size(); j++) {
-                    if (c == alfabetPermutat.get(j)) {
+                for (int j = 0; j < alfabetPermutat.length; j++) {
+                    if (c == alfabetPermutat[j]) {
                         char targetChar = alfabet[j]; 
                         if(isLowerCase){
                              resultat.append(Character.toLowerCase(targetChar));
