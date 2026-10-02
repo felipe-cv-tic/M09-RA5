@@ -74,7 +74,7 @@ public class Polialfabetic {
          StringBuffer resultat = new StringBuffer();
         for (int i = 0; i < msgXifrat.length(); i++) {
             char c = msgXifrat.charAt(i);
-            permutaAlfabet(); // 1. Permutar en el mismo orden usando la misma semilla[cite: 1]
+            permutaAlfabet();
             char cUpper = Character.toUpperCase(c);
             int pos = -1;
             for (int j = 0; j < alfabetPermutat.length; j++) {
