@@ -25,14 +25,15 @@ public class Polialfabetic {
         }
 
         System.out.println("Desxifratge:\n--------");
-        for (int i = 0; i < msgs.length; i++) {
+        for (int i = 0; i < msgsXifrats.length; i++) {
             initRandom(clauSecreta);
-            String msg =desxifraPoliAlfa(msgs[i]);
+            String msg =desxifraPoliAlfa(msgsXifrats[i]);
             System.out.printf("%-34s -> %s%n",msgsXifrats[i],msg);
         }
     }
 
     public static void permutaAlfabet(){
+        alfabetPermutatArrayList.clear();
         for (char c : alfabet) {
             alfabetPermutatArrayList.add(c);
         }
@@ -44,15 +45,51 @@ public class Polialfabetic {
         alfabetPermutat = permutat ;
     }
     public static String xifraPoliAlfa(String msg){
-         StringBuffer resultat = new StringBuffer();
+        StringBuffer resultat = new StringBuffer();
+        for (int i = 0; i < msg.length(); i++) {
+            char c = msg.charAt(i);
+            permutaAlfabet();
 
+            char cUpper = Character.toUpperCase(c);
+            int pos = -1;
+            for (int j = 0; j < alfabet.length; j++) {
+                if (alfabet[j] == cUpper) {
+                    pos = j;
+                    break;
+                }
+            }
+
+            if (pos != -1) {
+                char cifrado = alfabetPermutat[pos];
+                resultat.append(Character.isLowerCase(c) ? Character.toLowerCase(cifrado) : cifrado);
+            } else {
+                resultat.append(c);
+            }
+        }
 
 
          return resultat.toString();
     }
     public static String desxifraPoliAlfa(String msgXifrat){
          StringBuffer resultat = new StringBuffer();
-
+        for (int i = 0; i < msgXifrat.length(); i++) {
+            char c = msgXifrat.charAt(i);
+            permutaAlfabet(); // 1. Permutar en el mismo orden usando la misma semilla[cite: 1]
+            char cUpper = Character.toUpperCase(c);
+            int pos = -1;
+            for (int j = 0; j < alfabetPermutat.length; j++) {
+                if (alfabetPermutat[j] == cUpper) {
+                    pos = j;
+                    break;
+                }
+            }
+            if (pos != -1) {
+                char descifrado = alfabet[pos];
+                resultat.append(Character.isLowerCase(c) ? Character.toLowerCase(descifrado) : descifrado);
+            } else {
+                resultat.append(c);
+            }
+        }
 
 
          return resultat.toString();
