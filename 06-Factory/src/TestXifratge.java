@@ -1,3 +1,4 @@
+import iticbcn.xifratge.*;
 public class TestXifratge {
     public static void main(String[] args) {
         AlgorismeFactory[] aFactory = {
@@ -8,7 +9,7 @@ public class TestXifratge {
         String[] aNames = { "AES", "Monoalfabètic", "Polialfabètic", "RotX" };
 
         String[] msgs = { "Test 01: Àlgid, Ülrich, Vàlid",
-            "Test 02: Caràcters especials ¡!¿?*-123[]{}@#*" };
+            "Test 02: Caràcters especials ¡!¿?*-123[]{}@#" };
 
         String[][] claus = { { "Clau Secreta 01" }, { "ErrorClau", null },
             { "ErrorClau2", "123456" }, { "-1", "13", "1000", "Errorclau" }
@@ -20,7 +21,7 @@ public class TestXifratge {
 
             Xifrador xifrador = alg.creaXifrador();
 
-            System.out.println("====================================");
+            System.out.println("===========================");
 
             for (String msg : msgs) {
                 for (String clau : claus[i]) {
@@ -43,7 +44,7 @@ public class TestXifratge {
                         System.err.println(e.getLocalizedMessage());
                     }
                     System.out.println("Desxifrat: " + desxifrat);
-                    System.out.println("--------------------");
+                    System.out.println("-------------------");
                 }
             }
         }

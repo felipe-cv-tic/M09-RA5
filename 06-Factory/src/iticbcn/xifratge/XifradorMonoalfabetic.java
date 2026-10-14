@@ -1,19 +1,20 @@
 package iticbcn.xifratge;
-//03-Monoalfabetic
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class XifradorMonoalfabetic{
+public class XifradorMonoalfabetic implements Xifrador{
     private final static char[] alfabet = {
         'A', 'Á', 'À', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Ï',
         'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 'V', 'W', 'X', 'Y', 'Z'
     };
-    private final static List<Character> alfabetPermutatArrayList = new ArrayList<>();
-    private final static char[] alfabetPermutat = permutaAlfabet(alfabet);
-
-    private static char[] permutaAlfabet(char[] alfabet){
+    private char[] alfabetPermutat;
+    public XifradorMonoalfabetic() {
+        alfabetPermutat = permutaAlfabet(alfabet);
+    }
+    private char[] permutaAlfabet(char[] alfabet){
+        List<Character> alfabetPermutatArrayList = new ArrayList<>();
         for (char c : alfabet) {
             alfabetPermutatArrayList.add(c);
         }
@@ -24,41 +25,25 @@ public class XifradorMonoalfabetic{
         }
         return permutat;
     }
-
-    
-    public static void main(String[] args) {
-        
-        
-/* 
-        String[] frases = {
-            "Test 01 àrbitre, coixí, Perímetre",
-            "Test 02 Taüll, DÍA, año",
-            "Test 03 Peça, Òrrius, Bòvila"
-        };
-
-        String[] frasesPermutades = {"","",""};
-
-        for (int i = 0; i < alfabet.length; i++) {
-            System.out.printf("%c ",alfabet[i]);
-        }
-        System.out.println();
-        for (int i = 0; i < alfabetPermutat.length; i++) {
-            System.out.printf("%c ",alfabetPermutat[i]);
-        }
-        System.out.println();
-        System.out.printf("Xifratge: \n");
-        for (int i = 0; i < frases.length; i++) {
-            System.out.printf("%s -> %s\n",frases[i],xifraMonoAlfa(frases[i]));
-            frasesPermutades[i] = xifraMonoAlfa(frases[i]);
-        
-        }
-        System.out.printf("Desxifratge: \n");
-        for (int i = 0; i < frasesPermutades.length; i++) {
-            System.out.printf("%s -> %s\n",frasesPermutades[i],desxifraMonoAlfa(frasesPermutades[i]));        
-        }*/
-
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        validaClau(clau);
+        return new TextXifrat(xifraMonoAlfa(msg).getBytes(java.nio.charset.StandardCharsets.UTF_8));
     }
 
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        validaClau(clau);
+        if (xifrat == null || xifrat.getBytes() == null) {
+            throw new IllegalArgumentException("El text xifrat no pot ser null");
+        }
+        return desxifraMonoAlfa(new String(xifrat.getBytes(), java.nio.charset.StandardCharsets.UTF_8));
+    }
+    private void validaClau(String clau) throws ClauNoSuportada {
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratxe monoalfabètic no suporta clau != null");
+        }
+    }
     public String xifraMonoAlfa(String cadena){
         StringBuffer resultat = new StringBuffer();
 
