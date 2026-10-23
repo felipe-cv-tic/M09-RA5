@@ -1,0 +1,115 @@
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+public class Hashes {
+    public int npass = 0;
+
+    public String getSHA512AmbSalt (String pw, String salt){
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(pw.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++){
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return generatedPassword;
+    }
+
+    public String getPBKDF2AmbSalt(String pw, String salt){
+        PBEKeySpec spec = new PBEKeySpec(pw.toCharArray(), salt.getBytes(StandardCharsets.UTF_8), iterations, keyLength);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+        byte[] bytes = factory.generateSecret(spec).getEncoded();
+        return HexFormat.of().formatHex(bytes);
+    }
+
+    public String forcaBruta(String alg, String hash, String salt){
+        String charset = "abcdefABCDEF1234567890!";
+        StringBuilder pswIntent = new StringBuilder();
+        for (int i1 = 0; i1 < charset.length(); i1++) {
+            char c1 = charset.charAt(i1);
+            for (int i2 = 0; i1 < charset.length(); i1++) {
+                char c2 = charset.charAt(i2);
+                for (int i3 = 0; i1 < charset.length(); i1++) {
+                    char c3 = charset.charAt(i3);
+                    for (int i4 = 0; i1 < charset.length(); i1++) {
+                        char c4 = charset.charAt(i4);
+                        for (int i5 = 0; i1 < charset.length(); i1++) {
+                            char c5 = charset.charAt(i5);
+                            for (int i6 = 0; i1 < charset.length(); i1++) {
+                                char c6 = charset.charAt(i6);
+                                char[] chars = {c1,c2,c3,c4,c5,c6};
+                                pswIntent.append(chars);
+                                npass++;
+                                if (alg == "SHA512"){
+                                    if (getSHA512AmbSalt(pswIntent, salt) == hash){
+                                        return pswIntent.toString();
+                                    }
+
+                                }else{
+                                    if (getPBKDF2AmbSalt(pswIntent,salt) == hash){
+                                        return pswIntent.toString();
+                                    }
+                                }                                
+                          }
+                        }
+                    }
+                }
+            }
+        }
+
+        return "";
+    }
+    public String getInterval(long t1, long t2){
+        long result = t2-t1;
+        return (String)result;
+    }
+
+    
+
+
+    public static void main(String[] args) {
+        String salt = "qpoweiruañslkdfjz";
+        String pw = "aaabF!";
+
+        Hashes h = new Hashes();
+
+        String[] aHashes = {h.getSHA512AmbSalt(pw,salt),h.getPBKDF2AmbSalt(pw,salt)};
+
+        String pwTrobat = null;
+        String[] algorismes = {"SHA-512","PBKDF2"};
+
+        for (int i = 0; i < aHashes.length; i++) {
+            System.out.printf("===========================");
+            System.out.printf("Algorisme: %s\n",algorismes[i]);
+            System.out.printf("Hash: %s\n",aHashes[i]);
+            System.out.printf("---------------------------\n");
+            System.out.printf("-- Inici de força bruta --\n");
+
+            long t1 = System.currentTimeMillis();
+            pwTrobat = h.forcaBruta(algorismes[i],aHashes[i],salt);
+            long t2 = System.currentTimeMillis();
+
+            System.out.printf("Pass: %s\n", pwTrobat);
+            System.out.printf("Provats: %d\n",h.npass);
+
+            System.out.printf("Temps %s\n",h.getInterval(t1,t2));
+
+            System.out.printf("(\"---------------------------\n\n");
+
+
+
+        }
+
+    }
+}
